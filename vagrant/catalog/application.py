@@ -20,3 +20,13 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# Show all companies
+@app.route('/')
+@app.route('/companies/')
+def showCompanies():
+    return "This is the main page to show all companies."
+
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='0.0.0.0', port=8000)
