@@ -13,6 +13,14 @@ class User(Base):
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+class Company(Base):
+    __tablename__ = 'company'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
 engine = create_engine('sqlite:///companysmartphone.db')
 
 
