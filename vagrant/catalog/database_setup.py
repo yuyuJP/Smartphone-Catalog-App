@@ -13,6 +13,7 @@ class User(Base):
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+
 class Company(Base):
     __tablename__ = 'company'
 
@@ -20,6 +21,20 @@ class Company(Base):
     name = Column(String(250), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+
+
+class Smartphone(object):
+    __tablename__ = 'smartphone'
+
+    name = Column(String(80), nullable=False)
+    id = Column(Integer, primary_key=True)
+    description = Column(String(250))
+    price = Column(String(8))
+    company_id = Column(Integer, ForeignKey('company.id'))
+    company = relationship(Company)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
 
 engine = create_engine('sqlite:///companysmartphone.db')
 
