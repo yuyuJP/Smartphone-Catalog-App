@@ -23,7 +23,6 @@ session = DBSession()
 
 # Show all companies
 @app.route('/')
-@app.route('/companies/')
 def showCompanies():
     return "This is the main page to show all companies."
 
