@@ -2,6 +2,7 @@
 {% block title %}Smartphone Catalog App{% endblock %}
 
 {% block content %}
+<p>Companies</p>
 {% for company in companies %}
   <ul>
     <li><a href="{{url_for('showCompany', company_id = company.id)}}">{{ company.name }}</a></li>
