@@ -57,7 +57,7 @@ def editSmartphone(company_id, smartphone_id):
         session.commit()
         return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
 
-    return "This is a page for editintg smartphone item"
+    return render_template('editItem.html', company=company, editItem=editItem)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])
