@@ -1,3 +1,4 @@
 .DS_Store
 *.db
 client_secrets.json
+*.pyc
