@@ -3,6 +3,7 @@
 
 {% block content %}
 <p>{{ smartphone.name }}</p>
+<p>{{ smartphone.price }}</p>
 <p>Description:{{ smartphone.description }}</p>
 <a href="{{url_for('editSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">Edit</a> | <a href="{{url_for('deleteSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">Delete</a>
 {% endblock %}
