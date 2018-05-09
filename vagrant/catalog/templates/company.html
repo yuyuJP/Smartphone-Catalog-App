@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block title %}Company: {{ company.name }}{% endblock %}
+
+{% block content %}
+<p>{{ company.name }}</p>
+{% for smartphone in smartphones %}
+  <ul>
+    <li><a href="{{url_for('showSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">{{ smartphone.name }}</a></li>
+  </ul>
+{% endfor %}
+{% endblock %}
