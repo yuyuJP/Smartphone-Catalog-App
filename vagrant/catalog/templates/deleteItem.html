@@ -3,4 +3,7 @@
 
 {% block content %}
 <h2>Are you sure you want to delete {{ deleteItem.name }}?</h2>
+<form action="{{ url_for('editSmartphone', company_id=company.id, smartphone_id=deleteItem.id)}}" method = "post">
+  <button type="submit">Delete</button>
+</form>
 {% endblock %}
