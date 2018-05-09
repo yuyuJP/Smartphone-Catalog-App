@@ -27,6 +27,13 @@ def showCompanies():
     companies = session.query(Company).all()
     return render_template('index.html', companies=companies)
 
+
+@app.route('/companies/<int:company_id>/')
+@app.route('/companies/<int:company_id>/Smartphones/')
+def showCompany(company_id):
+    return "This page is for Company page. It displays Company No.%s" % company_id
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=8000)
