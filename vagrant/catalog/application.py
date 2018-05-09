@@ -24,7 +24,8 @@ session = DBSession()
 # Show all companies
 @app.route('/')
 def showCompanies():
-    return render_template('index.html')
+    companies = session.query(Company).all()
+    return render_template('index.html', companies=companies)
 
 if __name__ == '__main__':
     app.debug = True
