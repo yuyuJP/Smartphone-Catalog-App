@@ -2,7 +2,7 @@
 {% block title %}Edit Smartphone Item{% endblock %}
 
 {% block content %}
-  <form action="#" method = "post">
+  <form action="{{ url_for('editSmartphone', company_id=selectedCompany.id, smartphone_id=editItem.id)}}" method = "post">
     <label for="name">Name:</label>
 		<input type ="text" maxlength="100" class="form-control" name="name" value="{{ editItem.name }}">
     <label for="description">Description:</label>
