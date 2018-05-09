@@ -37,7 +37,9 @@ def showCompany(company_id):
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
-    return "This is a smartphone page. Company ID is {} and smartphone ID is {}".format(company_id, smartphone_id)
+    company = session.query(Company).filter_by(id=company_id).one()
+    smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    return render_template('smartphone.html', company=company, smartphone=smartphone)
 
 
 if __name__ == '__main__':
