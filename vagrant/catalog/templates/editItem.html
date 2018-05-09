@@ -2,4 +2,12 @@
 {% block title %}Edit Smartphone Item{% endblock %}
 
 {% block content %}
+  <form action="#" method = "post">
+    <label for="name">Name:</label>
+		<input type ="text" maxlength="100" class="form-control" name="name" value="{{ editItem.name }}">
+    <label for="description">Description:</label>
+		<textarea class="form-control" maxlength="250" rows="3" name="description">{{ editItem.description }}</textarea>
+    <label for="price">Price:</label>
+    &#x24; <input type ="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
+  </form>
 {% endblock %}
