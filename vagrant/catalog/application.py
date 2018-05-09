@@ -59,15 +59,20 @@ def editSmartphone(company_id, smartphone_id):
         session.add(editSmartphone)
         session.commit()
         return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
-
-    return render_template('editItem.html', selectedCompany=selectedCompany, editItem=editSmartphone, companies=companies)
+    else:
+        return render_template('editItem.html', selectedCompany=selectedCompany, editItem=editSmartphone, companies=companies)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])
 def deleteSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
-    smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
-    return "This is a page for deleting smartphone item"
+    deleteSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    if request.method == 'POST':
+        session.delete(deleteSmartphone)
+        session.commit()
+        return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
+    else:
+        return render_template('deleteItem.html', company=company, deleteItem=deleteSmartphone)
 
 
 if __name__ == '__main__':
