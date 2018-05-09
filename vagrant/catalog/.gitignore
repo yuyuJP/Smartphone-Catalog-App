@@ -1,4 +1,5 @@
 .DS_Store
 *.db
+*.db-journal
 client_secrets.json
 *.pyc
