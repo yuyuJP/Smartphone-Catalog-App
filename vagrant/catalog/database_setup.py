@@ -23,7 +23,7 @@ class Company(Base):
     user = relationship(User)
 
 
-class Smartphone(object):
+class Smartphone(Base):
     __tablename__ = 'smartphone'
 
     name = Column(String(80), nullable=False)
