@@ -55,7 +55,7 @@ def editSmartphone(company_id, smartphone_id):
         if request.form['price']:
             editSmartphone.price = request.form['price']
         if request.form['company']:
-            editSmartphone.company = request.form['company']
+            editSmartphone.company = session.query(Company).filter_by(name=request.form['company']).one()
         session.add(editSmartphone)
         session.commit()
         return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
