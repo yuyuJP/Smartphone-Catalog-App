@@ -2,5 +2,9 @@
 {% block title %}Smartphone Catalog App{% endblock %}
 
 {% block content %}
-Hello this is index page!
+{% for company in companies %}
+  <ul>
+    <li><a href="{{url_for('showCompany', company_id = company.id)}}">{{ company.name }}</a></li>
+  </ul>
+{% endfor %}
 {% endblock %}
