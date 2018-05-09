@@ -15,7 +15,7 @@ import requests
 app = Flask(__name__)
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///companysmartphone.db')
+engine = create_engine('sqlite:///companysmartphone.db?check_same_thread=False')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -28,10 +28,16 @@ def showCompanies():
     return render_template('index.html', companies=companies)
 
 
-@app.route('/companies/<int:company_id>/')
-@app.route('/companies/<int:company_id>/Smartphones/')
+@app.route('/companies/<int:company_id>/smartphones/')
 def showCompany(company_id):
-    return "This page is for Company page. It displays Company No.%s" % company_id
+    company = session.query(Company).filter_by(id=company_id).one()
+    smartphones = session.query(Smartphone).filter_by(company_id=company_id).all()
+    return render_template('company.html', company=company, smartphones=smartphones)
+
+
+@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
+def showSmartphone(company_id, smartphone_id):
+    return "This is a smartphone page. Company ID is {} and smartphone ID is {}".format(company_id, smartphone_id)
 
 
 if __name__ == '__main__':
