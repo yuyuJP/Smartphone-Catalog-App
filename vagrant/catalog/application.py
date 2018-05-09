@@ -45,7 +45,18 @@ def showSmartphone(company_id, smartphone_id):
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
-    smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    editItem = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        if request.form['description']:
+            editedItem.description = request.form['description']
+        if request.form['price']:
+            editedItem.price = request.form['price']
+        session.add(editedItem)
+        session.commit()
+        return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
+
     return "This is a page for editintg smartphone item"
 
 
