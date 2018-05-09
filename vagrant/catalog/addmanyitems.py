@@ -28,3 +28,18 @@ company1 = Company(user_id=1, name="Apple")
 
 session.add(company1)
 session.commit()
+
+smartphone1 = Smartphone(user_id=1, name="iPhone X", description="Adopting OLED screen technology for the first time in iPhone history",
+                     price="$999", company=company1)
+session.add(smartphone1)
+session.commit()
+
+smartphone2 = Smartphone(user_id=1, name="iPhone 8", description="The iPhone 8 is a smartphone designed, developed, and marketed by Apple Inc. It was announced on September 12, 2017",
+                     price="$600", company=company1)
+session.add(smartphone2)
+session.commit()
+
+smartphone3 = Smartphone(user_id=1, name="iPhone 7 Plus", description="The iPhone 7's overall design is similar to the iPhone 6S, but introduces new colour options (matte black and jet black), water and dust resistance.",
+                     price="$500", company=company1)
+session.add(smartphone3)
+session.commit()
