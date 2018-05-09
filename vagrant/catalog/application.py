@@ -70,7 +70,7 @@ def deleteSmartphone(company_id, smartphone_id):
     if request.method == 'POST':
         session.delete(deleteSmartphone)
         session.commit()
-        return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
+        return redirect(url_for('showCompany', company_id=company_id))
     else:
         return render_template('deleteItem.html', company=company, deleteItem=deleteSmartphone)
 
