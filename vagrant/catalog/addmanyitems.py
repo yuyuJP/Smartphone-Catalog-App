@@ -29,7 +29,7 @@ company1 = Company(user_id=1, name="Apple")
 session.add(company1)
 session.commit()
 
-smartphone1 = Smartphone(user_id=1, name="iPhone X", description="Adopting OLED screen technology for the first time in iPhone history",
+smartphone1 = Smartphone(user_id=1, name="iPhone X", description="Adopting OLED screen technology",
                      price="$999", company=company1)
 session.add(smartphone1)
 session.commit()
