@@ -32,7 +32,7 @@ def showLogin():
                     for x in xrange(32))
     login_session['state'] = state
     # return "The current session state is %s" % login_session['state']
-    return render_template('login.html', STATE=state)
+    return render_template('login.html', STATE=state, login_session=login_session)
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -190,21 +190,21 @@ def disconnect():
 @app.route('/')
 def showCompanies():
     companies = session.query(Company).all()
-    return render_template('index.html', companies=companies)
+    return render_template('index.html', companies=companies, login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/')
 def showCompany(company_id):
     company = session.query(Company).filter_by(id=company_id).one()
     smartphones = session.query(Smartphone).filter_by(company_id=company_id).all()
-    return render_template('company.html', company=company, smartphones=smartphones)
+    return render_template('company.html', company=company, smartphones=smartphones, login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
-    return render_template('smartphone.html', company=company, smartphone=smartphone)
+    return render_template('smartphone.html', company=company, smartphone=smartphone, login_session=login_session)
 
 
 @app.route('/new/', methods=['GET', 'POST'])
@@ -223,7 +223,7 @@ def newSmartphone():
         else:
             return "ERORR: Not enough parameter", 400
     else:
-        return render_template('newItem.html', companies=companies)
+        return render_template('newItem.html', companies=companies, login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
@@ -244,7 +244,7 @@ def editSmartphone(company_id, smartphone_id):
         session.commit()
         return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
     else:
-        return render_template('editItem.html', selectedCompany=selectedCompany, editItem=editSmartphone, companies=companies)
+        return render_template('editItem.html', selectedCompany=selectedCompany, editItem=editSmartphone, companies=companies, login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])
@@ -256,7 +256,7 @@ def deleteSmartphone(company_id, smartphone_id):
         session.commit()
         return redirect(url_for('showCompany', company_id=company_id))
     else:
-        return render_template('deleteItem.html', company=company, deleteItem=deleteSmartphone)
+        return render_template('deleteItem.html', company=company, deleteItem=deleteSmartphone, login_session=login_session)
 
 
 if __name__ == '__main__':
