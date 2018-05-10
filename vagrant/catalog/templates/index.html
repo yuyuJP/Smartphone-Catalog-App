@@ -16,7 +16,9 @@
   <div class="latest__item">
     <div class="list__title__container">
       <p class="list__title">Latest Items</p>
-      <a href="{{ url_for('newSmartphone')}}" class="add__item">Add Item</a>
+      {% if 'username' in login_session %}
+        <a href="{{ url_for('newSmartphone')}}" class="add__item">Add Item</a>
+      {% endif %}
     </div>
   </div>
 </div>

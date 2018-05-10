@@ -11,7 +11,9 @@
   <div class="smartphone__items">
     <div class="list__title__container">
       <p class="list__title">Items</p>
-      <a href="#" class="add__item">Add Item</a>
+      {% if 'username' in login_session %}
+        <a href="#" class="add__item">Add Item</a>
+      {% endif %}
     </div>
     {% for smartphone in smartphones %}
       <ul>

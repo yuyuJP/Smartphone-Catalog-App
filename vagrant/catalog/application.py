@@ -211,7 +211,6 @@ def showSmartphone(company_id, smartphone_id):
 def newSmartphone():
     if 'username' not in login_session:
         return redirect('/login')
-    print(login_session)
     companies = session.query(Company).all()
     if request.method == 'POST':
         if request.form['name'] and request.form['description'] and request.form['price'] and request.form['company']:
@@ -228,6 +227,8 @@ def newSmartphone():
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
     companies = session.query(Company).all()
     editSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
@@ -249,6 +250,8 @@ def editSmartphone(company_id, smartphone_id):
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])
 def deleteSmartphone(company_id, smartphone_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     company = session.query(Company).filter_by(id=company_id).one()
     deleteSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
     if request.method == 'POST':
