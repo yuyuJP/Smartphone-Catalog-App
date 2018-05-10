@@ -169,6 +169,22 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+@app.route('/disconnect')
+def disconnect():
+    if 'provider' in login_session:
+        if login_session['provider'] == 'google':
+            gdisconnect()
+            del login_session['gplus_id']
+            del login_session['access_token']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        del login_session['user_id']
+        del login_session['provider']
+        return redirect(url_for('showCompanies'))
+    else:
+        return redirect(url_for('showCompanies'))
+
 
 # Show all companies
 @app.route('/')
@@ -193,8 +209,21 @@ def showSmartphone(company_id, smartphone_id):
 
 @app.route('/new/', methods=['GET', 'POST'])
 def newSmartphone():
+    if 'username' not in login_session:
+        return redirect('/login')
+    print(login_session)
     companies = session.query(Company).all()
-    return render_template('newItem.html', companies=companies)
+    if request.method == 'POST':
+        if request.form['name'] and request.form['description'] and request.form['price'] and request.form['company']:
+            newSmartphone = Smartphone(user_id=login_session['user_id'], name=request.form['name'], description=request.form['description'],
+                       price=request.form['price'], company=session.query(Company).filter_by(name=request.form['company']).one())
+            session.add(newSmartphone)
+            session.commit()
+            return redirect(url_for('showCompanies'))
+        else:
+            return "ERORR: Not enough parameter", 400
+    else:
+        return render_template('newItem.html', companies=companies)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
