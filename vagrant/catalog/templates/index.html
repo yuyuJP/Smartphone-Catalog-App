@@ -2,10 +2,22 @@
 {% block title %}Smartphone Catalog App{% endblock %}
 
 {% block content %}
-<p>Companies</p>
-{% for company in companies %}
-  <ul>
-    <li><a href="{{url_for('showCompany', company_id = company.id)}}">{{ company.name }}</a></li>
-  </ul>
-{% endfor %}
+<div class="list">
+  <div class="company__list">
+    <div class="list__title__container">
+      <p class="list__title">Companies</p>
+    </div>
+    {% for company in companies %}
+      <ul>
+        <li><a class="list__item" href="{{url_for('showCompany', company_id = company.id)}}">{{ company.name }}</a></li>
+      </ul>
+    {% endfor %}
+  </div>
+  <div class="latest__item">
+    <div class="list__title__container">
+      <p class="list__title">Latest Items</p>
+      <a href="#" class="add__item">Add Item</a>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -5,6 +5,7 @@ body, html {
   height: 100%;
   font-size: 16px;
 	font-family: sans-serif;
+  background-color: #f2f2f2;
 }
 
 /*
@@ -52,4 +53,76 @@ body, html {
 .header__login:hover {
   background: white;
   color: #F56151;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.company__list {
+  min-height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: white;
+}
+
+.list__title {
+  text-align: center;
+  color: #F56151;
+  font-weight: 400;
+  font-size: 1.6em;
+  margin-top: 24px;
+  margin-left: 6px;
+  margin-right: 6px;
+  padding-top: 10px;
+}
+
+.list__item {
+  font-size: 1.6em;
+  color: #F56151;
+  text-decoration: none;
+}
+
+.list__title__container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.latest__item {
+  min-height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: white;
+}
+
+.add__item {
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 3px;
+  margin-top: 36px;
+  margin-bottom: 24px;
+  margin-right: 12px;
+  color: white;
+  background-color: #F56151;
+}
+
+@media screen and (min-width: 550px) {
+  .company__list {
+    width: 30%;
+    margin-right: 0px;
+  }
+  .latest__item {
+    width: 60%;
+    margin-right: 0px;
+  }
 }
