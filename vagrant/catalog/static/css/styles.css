@@ -57,7 +57,7 @@ body, html {
 .company__list {
   min-height: 500px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
@@ -92,7 +92,7 @@ body, html {
 .latest__item {
   min-height: 500px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
@@ -130,8 +130,8 @@ body, html {
 /* company.html */
 
 .company__head {
+  font-size: 1.6em;
   width: 100%;
-  margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
 }
@@ -144,8 +144,7 @@ body, html {
 .smartphone__items {
   min-height: 500px;
   width: 100%;
-  border-radius: 8px;
-  margin-top: 25px;
+  border-radius: 4px;
   margin-left: 25px;
   margin-right: 25px;
   background-color: white;
