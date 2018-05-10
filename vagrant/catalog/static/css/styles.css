@@ -74,7 +74,7 @@ body, html {
   text-align: center;
   color: #F56151;
   font-weight: 400;
-  font-size: 1.6em;
+  font-size: 1.4em;
   margin-top: 24px;
   margin-left: 6px;
   margin-right: 6px;
@@ -82,7 +82,7 @@ body, html {
 }
 
 .list__item {
-  font-size: 1.6em;
+  font-size: 1.4em;
   color: #F56151;
   text-decoration: none;
 }
@@ -109,7 +109,7 @@ body, html {
   padding: 8px 16px;
   text-decoration: none;
   border-radius: 3px;
-  margin-top: 36px;
+  margin-top: 30px;
   margin-bottom: 24px;
   margin-right: 12px;
   color: white;
@@ -124,5 +124,11 @@ body, html {
   .latest__item {
     width: 60%;
     margin-right: 0px;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .list__title {
+    font-size: 1.6em;
   }
 }
