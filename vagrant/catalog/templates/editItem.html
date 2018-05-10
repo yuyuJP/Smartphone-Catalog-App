@@ -2,18 +2,33 @@
 {% block title %}Edit Smartphone Item{% endblock %}
 
 {% block content %}
+<div class="edit__item">
+  <div class="list__title__container">
+    <p class="list__title">Edit Item</p>
+  </div>
   <form action="{{ url_for('editSmartphone', company_id=selectedCompany.id, smartphone_id=editItem.id)}}" method = "post">
-    <label for="name">Name:</label>
-		<input type ="text" maxlength="100" class="form-control" name="name" value="{{ editItem.name }}">
-    <label for="description">Description:</label>
-		<textarea class="form-control" maxlength="250" rows="3" name="description">{{ editItem.description }}</textarea>
-    <label for="price">Price:</label>
-    <input type ="text" maxlength="10" class="form-control" name="price" value="{{editItem.price}}">
-    <select name="company">
-      {% for company in companies %}
-        <option value="{{ company.name }}" {% if editItem.company.name == company.name %}selected{% endif %}>{{ company.name }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">Save</button>
+    <div class="edit__info">
+      <label for="name">Name:</label>
+  		<input type ="text" maxlength="100" class="form-control" name="name" value="{{ editItem.name }}">
+    </div>
+    <div class="edit__info">
+      <label for="description">Description:</label>
+  		<textarea class="form-control" maxlength="250" rows="3" name="description">{{ editItem.description }}</textarea>
+    </div>
+    <div class="edit__info">
+      <label for="price">Price:</label>
+      <input type ="text" maxlength="10" class="form-control" name="price" value="{{editItem.price}}">
+    </div>
+    <div class="edit__info">
+      <select name="company">
+        {% for company in companies %}
+          <option value="{{ company.name }}" {% if editItem.company.name == company.name %}selected{% endif %}>{{ company.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="edit__info">
+      <button class="edit__submit" type="submit">Save</button>
+    </div>
   </form>
+</div>
 {% endblock %}

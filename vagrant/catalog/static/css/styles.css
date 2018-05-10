@@ -2,6 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   width: 100%;
+  min-width: 320px;
   height: 100%;
   font-size: 16px;
 	font-family: sans-serif;
@@ -61,6 +62,8 @@ body, html {
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
   background-color: white;
 }
 
@@ -96,6 +99,8 @@ body, html {
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
   background-color: white;
 }
 
@@ -147,12 +152,15 @@ body, html {
   border-radius: 4px;
   margin-left: 25px;
   margin-right: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
   background-color: white;
 }
 
 /* ********** */
 
 /* smartphone.html */
+
 .smartphone__description {
   font-size: 1.2em;
   margin: 16px 16px;
@@ -171,4 +179,43 @@ body, html {
   color: white;
   background-color: #F56151;
 }
+
+/* ********** */
+
+/* editItem.html */
+
+.edit__item {
+  min-height: 500px;
+  width: auto;
+  border-radius: 4px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  padding-bottom: 30px;
+  background-color: white;
+}
+
+.edit__info {
+  margin-left: 15px;
+  margin-top: 25px;
+}
+
+.edit__submit {
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 3px;
+  color: white;
+  background-color: #F56151;
+}
+
+textarea {
+  vertical-align: top;
+  font-size: 1.2em;
+  resize: both;
+  min-height: 200px;
+  max-height: 400px;
+  width: 60%;
+}
+
 /* ********** */
