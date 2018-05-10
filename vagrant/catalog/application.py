@@ -191,6 +191,12 @@ def showSmartphone(company_id, smartphone_id):
     return render_template('smartphone.html', company=company, smartphone=smartphone)
 
 
+@app.route('/new/', methods=['GET', 'POST'])
+def newSmartphone():
+    companies = session.query(Company).all()
+    return render_template('newItem.html', companies=companies)
+
+
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
