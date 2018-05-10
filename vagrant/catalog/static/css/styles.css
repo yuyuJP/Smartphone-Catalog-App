@@ -8,12 +8,6 @@ body, html {
   background-color: #f2f2f2;
 }
 
-/*
- *
- * Header
- *
- */
-
 .header {
   min-height: 76px;
   background-color: #F56151;
@@ -132,3 +126,29 @@ body, html {
     font-size: 1.6em;
   }
 }
+
+/* company.html */
+
+.company__head {
+  width: 100%;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.company__head__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.smartphone__items {
+  min-height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: white;
+}
+
+/* ********** */

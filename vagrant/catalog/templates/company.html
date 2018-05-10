@@ -2,10 +2,23 @@
 {% block title %}Company: {{ company.name }}{% endblock %}
 
 {% block content %}
-<p>{{ company.name }}</p>
-{% for smartphone in smartphones %}
-  <ul>
-    <li><a href="{{url_for('showSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">{{ smartphone.name }}</a></li>
-  </ul>
-{% endfor %}
+<div class="list">
+  <div class="company__head">
+    <div class="company__head__container">
+      <p class="list__title">{{ company.name }}</p>
+    </div>
+  </div>
+  <div class="smartphone__items">
+    <div class="list__title__container">
+      <p class="list__title">Smartphone Items</p>
+      <a href="#" class="add__item">Add Item</a>
+    </div>
+    {% for smartphone in smartphones %}
+      <ul>
+        <li><a class="list__item" href="{{url_for('showSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">{{ smartphone.name }}</a></li>
+      </ul>
+    {% endfor %}
+  </div>
+</div>
+
 {% endblock %}
