@@ -200,6 +200,25 @@ def showCompany(company_id):
     return render_template('company.html', company=company, smartphones=smartphones, login_session=login_session)
 
 
+@app.route('/companies/<int:company_id>/smartphones/new', methods=['GET', 'POST'])
+def newSmartphoneFromCompany(company_id):
+    if 'username' not in login_session:
+        return redirect('/login')
+    selectedCompany = session.query(Company).filter_by(id=company_id).one()
+    companies = session.query(Company).all()
+    if request.method == 'POST':
+        if request.form['name'] and request.form['description'] and request.form['price'] and request.form['company']:
+            newSmartphone = Smartphone(user_id=login_session['user_id'], name=request.form['name'], description=request.form['description'],
+                       price=request.form['price'], company=session.query(Company).filter_by(name=request.form['company']).one())
+            session.add(newSmartphone)
+            session.commit()
+            return redirect(url_for('showCompany', company_id=company_id))
+        else:
+            return "ERORR: Not enough parameter", 400
+    else:
+        return render_template('newItem.html', selectedCompany=selectedCompany, companies=companies, login_session=login_session)
+
+
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
