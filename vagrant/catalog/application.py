@@ -216,7 +216,7 @@ def newSmartphoneFromCompany(company_id):
         else:
             return "ERORR: Not enough parameter", 400
     else:
-        return render_template('newItem.html', selectedCompany=selectedCompany, companies=companies, login_session=login_session)
+        return render_template('newItemFromCompany.html', selectedCompany=selectedCompany, companies=companies, login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')

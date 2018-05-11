@@ -12,7 +12,7 @@
     <div class="list__title__container">
       <p class="list__title">Items</p>
       {% if 'username' in login_session %}
-        <a href="#" class="add__item">Add Item</a>
+        <a href="{{ url_for('newSmartphoneFromCompany', company_id=company.id)}}" class="add__item">Add Item</a>
       {% endif %}
     </div>
     {% for smartphone in smartphones %}
