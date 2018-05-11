@@ -220,3 +220,8 @@ textarea {
 }
 
 /* ********** */
+
+.signin__button {
+  margin-top: 20px;
+  margin-left: 20px;
+}
