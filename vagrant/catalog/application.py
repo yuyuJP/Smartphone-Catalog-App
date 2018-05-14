@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash  # NOQA
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Company, Smartphone, User
@@ -19,11 +19,13 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Smartphone Catalog App"
 
 # Connect to Database and create database session
-engine = create_engine('sqlite:///companysmartphone.db?check_same_thread=False')
+sqlite_path = 'sqlite:///companysmartphone.db?check_same_thread=False'
+engine = create_engine(sqlite_path)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -32,7 +34,9 @@ def showLogin():
                     for x in xrange(32))
     login_session['state'] = state
     # return "The current session state is %s" % login_session['state']
-    return render_template('login.html', STATE=state, login_session=login_session)
+    return render_template('login.html', STATE=state,
+                           login_session=login_session)
+
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -86,7 +90,8 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
+        res_msg = 'Current user is already connected.'
+        response = make_response(json.dumps(res_msg),
                                  200)
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -113,7 +118,9 @@ def gconnect():
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
-    return render_template('welcome.html', username=login_session['username'], imgsrc=login_session['picture'])
+    return render_template('welcome.html', username=login_session['username'],
+                           imgsrc=login_session['picture'])
+
 
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
@@ -156,9 +163,11 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
-        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        res_msg = 'Failed to revoke token for given user.'
+        response = make_response(json.dumps(res_msg, 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
 
 @app.route('/disconnect')
 def disconnect():
@@ -181,40 +190,61 @@ def disconnect():
 @app.route('/')
 def showCompanies():
     companies = session.query(Company).all()
-    return render_template('index.html', companies=companies, login_session=login_session)
+    return render_template('index.html', companies=companies,
+                           login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/')
 def showCompany(company_id):
     company = session.query(Company).filter_by(id=company_id).one()
-    smartphones = session.query(Smartphone).filter_by(company_id=company_id).all()
-    return render_template('company.html', company=company, smartphones=smartphones, login_session=login_session)
+    smartphone_query = session.query(Smartphone)
+    smartphones = smartphone_query.filter_by(company_id=company_id).all()
+    return render_template('company.html',
+                           company=company,
+                           smartphones=smartphones,
+                           login_session=login_session)
 
 
-@app.route('/companies/<int:company_id>/smartphones/new', methods=['GET', 'POST'])
+@app.route('/companies/<int:company_id>/smartphones/new',
+           methods=['GET', 'POST'])
 def newSmartphoneFromCompany(company_id):
     if 'username' not in login_session:
         return redirect('/login')
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
     companies = session.query(Company).all()
     if request.method == 'POST':
-        if request.form['name'] and request.form['description'] and request.form['price'] and request.form['company']:
-            newSmartphone = Smartphone(user_id=login_session['user_id'], name=request.form['name'], description=request.form['description'],
-                       price=request.form['price'], company=session.query(Company).filter_by(name=request.form['company']).one())
+        name = request.form['name']
+        desc = request.form['description']
+        price = request.form['price']
+        comp = request.form['company']
+        if name and desc and price and comp:
+            comp_query = session.query(Company)
+            company = comp_query.filter_by(name=comp).one()
+            newSmartphone = Smartphone(user_id=login_session['user_id'],
+                                       name=name,
+                                       description=desc,
+                                       price=price,
+                                       company=company)
             session.add(newSmartphone)
             session.commit()
             return redirect(url_for('showCompany', company_id=company_id))
         else:
             return "ERORR: Not enough parameter", 400
     else:
-        return render_template('newItemFromCompany.html', selectedCompany=selectedCompany, companies=companies, login_session=login_session)
+        return render_template('newItemFromCompany.html',
+                               selectedCompany=selectedCompany,
+                               companies=companies,
+                               login_session=login_session)
 
 
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
-    return render_template('smartphone.html', company=company, smartphone=smartphone, login_session=login_session)
+    return render_template('smartphone.html',
+                           company=company,
+                           smartphone=smartphone,
+                           login_session=login_session)
 
 
 @app.route('/new/', methods=['GET', 'POST'])
@@ -223,53 +253,76 @@ def newSmartphone():
         return redirect('/login')
     companies = session.query(Company).all()
     if request.method == 'POST':
-        if request.form['name'] and request.form['description'] and request.form['price'] and request.form['company']:
-            newSmartphone = Smartphone(user_id=login_session['user_id'], name=request.form['name'], description=request.form['description'],
-                       price=request.form['price'], company=session.query(Company).filter_by(name=request.form['company']).one())
+        name = request.form['name']
+        desc = request.form['description']
+        price = request.form['price']
+        comp = request.form['company']
+        if name and desc and price and comp:
+            comp_query = session.query(Company)
+            company = comp_query.filter_by(name=comp).one()
+            newSmartphone = Smartphone(user_id=login_session['user_id'],
+                                       name=name,
+                                       description=desc,
+                                       price=price,
+                                       company=company)
             session.add(newSmartphone)
             session.commit()
             return redirect(url_for('showCompanies'))
         else:
             return "ERORR: Not enough parameter", 400
     else:
-        return render_template('newItem.html', companies=companies, login_session=login_session)
+        return render_template('newItem.html',
+                               companies=companies,
+                               login_session=login_session)
 
 
-@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit', methods=['GET', 'POST'])
+@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit',
+           methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
     if 'username' not in login_session:
         return redirect('/login')
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
     companies = session.query(Company).all()
-    editSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    edSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
     if request.method == 'POST':
         if request.form['name']:
-            editSmartphone.name = request.form['name']
+            edSmartphone.name = request.form['name']
         if request.form['description']:
-            editSmartphone.description = request.form['description']
+            edSmartphone.description = request.form['description']
         if request.form['price']:
-            editSmartphone.price = request.form['price']
+            edSmartphone.price = request.form['price']
         if request.form['company']:
-            editSmartphone.company = session.query(Company).filter_by(name=request.form['company']).one()
-        session.add(editSmartphone)
+            query = session.query(Company)
+            company_form = request.form['company']
+            edSmartphone.company = query.filter_by(name=company_form).one()
+        session.add(edSmartphone)
         session.commit()
-        return redirect(url_for('showSmartphone', company_id=company_id, smartphone_id=smartphone_id))
+        return redirect(url_for('showSmartphone',
+                                company_id=company_id,
+                                smartphone_id=smartphone_id))
     else:
-        return render_template('editItem.html', selectedCompany=selectedCompany, editItem=editSmartphone, companies=companies, login_session=login_session)
+        return render_template('editItem.html',
+                               selectedCompany=selectedCompany,
+                               editItem=edSmartphone,
+                               companies=companies,
+                               login_session=login_session)
 
 
-@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])
+@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])  # NOQA
 def deleteSmartphone(company_id, smartphone_id):
     if 'username' not in login_session:
         return redirect('/login')
     company = session.query(Company).filter_by(id=company_id).one()
-    deleteSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    delSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
     if request.method == 'POST':
-        session.delete(deleteSmartphone)
+        session.delete(delSmartphone)
         session.commit()
         return redirect(url_for('showCompany', company_id=company_id))
     else:
-        return render_template('deleteItem.html', company=company, deleteItem=deleteSmartphone, login_session=login_session)
+        return render_template('deleteItem.html',
+                               company=company,
+                               deleteItem=delSmartphone,
+                               login_session=login_session)
 
 
 if __name__ == '__main__':
