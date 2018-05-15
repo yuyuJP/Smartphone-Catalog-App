@@ -29,7 +29,7 @@ $ python database_setup.py
 ```
 
 ### Add sample items
-To test the website, add several sample items to your database following by
+To test the web app, add several sample items to your database following by
 ```
 $ python addmanyitems.py
 ```
