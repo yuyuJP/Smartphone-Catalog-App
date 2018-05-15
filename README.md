@@ -18,6 +18,7 @@ $ vagrant ssh
 ```
 $ cd catalog/
 ```
+### Configure database
 You can setup database for the web application following by
 ```
 $ python database_setup.py
