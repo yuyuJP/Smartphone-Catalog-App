@@ -35,3 +35,4 @@ You can start the web application following by
 ```
 $ python application.py
 ```
+Open your web browser and open link `localhost:8000`
