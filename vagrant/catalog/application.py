@@ -328,6 +328,12 @@ def deleteSmartphone(company_id, smartphone_id):
                                login_session=login_session)
 
 
+@app.route('/JSON/')
+def smartphoneJSON():
+    smartphones = session.query(Smartphone).all()
+    return jsonify(Smartphones=[i.serialize for i in smartphones])
+
+
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True

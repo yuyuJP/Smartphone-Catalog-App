@@ -35,6 +35,17 @@ class Smartphone(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return {
+            'name': self.name,
+            'id': self.id,
+            'description': self.description,
+            'price': self.price,
+            'company': self.company.name,
+        }
+
 
 engine = create_engine('sqlite:///companysmartphone.db')
 
