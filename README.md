@@ -4,6 +4,10 @@ This repository is for Udacity Full Stack Web Developer Nanodegree Program Submi
 
 # Getting Started
 ## Vagrant
+### Change directory
+```
+$ cd vagrant/
+```
 ### Set up a vagrant machine
 ```
 $ vagrant up
