@@ -20,6 +20,11 @@
         <a href="{{ url_for('newSmartphone')}}" class="add__item">Add Item</a>
       {% endif %}
     </div>
+    {% for smartphone in smartphones %}
+      <ul>
+        <li><a class="list__item" href="{{url_for('showSmartphone', company_id = smartphone.company_id, smartphone_id=smartphone.id)}}">{{ smartphone.name }}</a></li>
+      </ul>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

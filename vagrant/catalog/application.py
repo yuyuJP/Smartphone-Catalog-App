@@ -143,9 +143,8 @@ def getUserID(email):
     except:
         return None
 
+
 # DISCONNECT - Revoke a current user's token and reset their login_session
-
-
 @app.route('/gdisconnect')
 def gdisconnect():
     # Only disconnect a connected user.
@@ -190,7 +189,11 @@ def disconnect():
 @app.route('/')
 def showCompanies():
     companies = session.query(Company).all()
+    smartphone_query = session.query(Smartphone)
+    smartphone_desc = smartphone_query.order_by(Smartphone.id.desc())
+    smartphones = smartphone_desc.limit(5).all()
     return render_template('index.html', companies=companies,
+                           smartphones=smartphones,
                            login_session=login_session)
 
 
