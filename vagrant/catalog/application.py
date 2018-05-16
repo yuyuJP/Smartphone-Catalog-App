@@ -331,8 +331,8 @@ def deleteSmartphone(company_id, smartphone_id):
 # Return JSON string which contains all smartphone items
 @app.route('/JSON/')
 def smartphonesJSON():
-    smartphones = session.query(Smartphone).all()
-    return jsonify(Smartphones=[i.serialize for i in smartphones])
+    companies = session.query(Company).all()
+    return jsonify(Companies=[i.serialize for i in companies])
 
 
 # Return JSON string which contains all smartphone items of one specific company
@@ -342,6 +342,14 @@ def showCompanySmartphoneJSON(company_id):
     smartphone_query = session.query(Smartphone)
     smartphones = smartphone_query.filter_by(company_id=company_id).all()
     return jsonify(Smartphones=[i.serialize for i in smartphones])
+
+
+#Return JSON string which contains one specific smartphone item
+@app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/JSON')
+def showSmartphoneJSON(company_id, smartphone_id):
+    company = session.query(Company).filter_by(id=company_id).one()
+    smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    return jsonify(Smartphone=smartphone)
 
 
 if __name__ == '__main__':
