@@ -196,7 +196,7 @@ def showCompanies():
                            smartphones=smartphones,
                            login_session=login_session)
 
-
+# Show company info
 @app.route('/companies/<int:company_id>/smartphones/')
 def showCompany(company_id):
     company = session.query(Company).filter_by(id=company_id).one()
@@ -328,9 +328,19 @@ def deleteSmartphone(company_id, smartphone_id):
                                login_session=login_session)
 
 
+# Return JSON string which contains all smartphone items
 @app.route('/JSON/')
-def smartphoneJSON():
+def smartphonesJSON():
     smartphones = session.query(Smartphone).all()
+    return jsonify(Smartphones=[i.serialize for i in smartphones])
+
+
+# Return JSON string which contains all smartphone items of one specific company
+@app.route('/companies/<int:company_id>/smartphones/JSON/')
+def showCompanySmartphoneJSON(company_id):
+    company = session.query(Company).filter_by(id=company_id).one()
+    smartphone_query = session.query(Smartphone)
+    smartphones = smartphone_query.filter_by(company_id=company_id).all()
     return jsonify(Smartphones=[i.serialize for i in smartphones])
 
 
