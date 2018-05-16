@@ -158,10 +158,12 @@ def gdisconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
+        # Return success response
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
+        # Return error response
         res_msg = 'Failed to revoke token for given user.'
         response = make_response(json.dumps(res_msg, 400))
         response.headers['Content-Type'] = 'application/json'
@@ -240,9 +242,12 @@ def newSmartphoneFromCompany(company_id):
                                login_session=login_session)
 
 
+# Show one specific smartphone info
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
+    #Fetch one company filtered by company ID
     company = session.query(Company).filter_by(id=company_id).one()
+    #Fetch one smartphone filtered by smartphone ID
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
     return render_template('smartphone.html',
                            company=company,
@@ -250,6 +255,7 @@ def showSmartphone(company_id, smartphone_id):
                            login_session=login_session)
 
 
+# Create new smartphone item
 @app.route('/new/', methods=['GET', 'POST'])
 def newSmartphone():
     if 'username' not in login_session:
@@ -260,6 +266,7 @@ def newSmartphone():
         desc = request.form['description']
         price = request.form['price']
         comp = request.form['company']
+        # Check if all required items are contained in the request.
         if name and desc and price and comp:
             comp_query = session.query(Company)
             company = comp_query.filter_by(name=comp).one()
@@ -270,6 +277,7 @@ def newSmartphone():
                                        company=company)
             session.add(newSmartphone)
             session.commit()
+            # Redirect to top page.
             return redirect(url_for('showCompanies'))
         else:
             return "ERORR: Not enough parameter", 400
@@ -282,6 +290,7 @@ def newSmartphone():
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit',
            methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
+    # Check if the user is already logged in.
     if 'username' not in login_session:
         return redirect('/login')
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
