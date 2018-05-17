@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash  # NOQA
+from flask import Flask, render_template, request, redirect, jsonify, url_for
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Company, Smartphone, User
@@ -198,6 +198,7 @@ def showCompanies():
                            smartphones=smartphones,
                            login_session=login_session)
 
+
 # Show company info
 @app.route('/companies/<int:company_id>/smartphones/')
 def showCompany(company_id):
@@ -248,9 +249,9 @@ def newSmartphoneFromCompany(company_id):
 # Show one specific smartphone info
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/')
 def showSmartphone(company_id, smartphone_id):
-    #Fetch one company filtered by company ID
+    # Fetch one company filtered by company ID
     company = session.query(Company).filter_by(id=company_id).one()
-    #Fetch one smartphone filtered by smartphone ID
+    # Fetch one smartphone filtered by smartphone ID
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
     # Check an item's owner
     isAuthorized = smartphone.user_id == login_session['user_id']
@@ -364,7 +365,7 @@ def smartphonesJSON():
     return jsonify(Companies=[i.serialize for i in companies])
 
 
-# Return JSON string which contains all smartphone items of one specific company
+# Return JSON string which contains all smartphone items of a specific company
 @app.route('/companies/<int:company_id>/smartphones/JSON/')
 def showCompanySmartphoneJSON(company_id):
     company = session.query(Company).filter_by(id=company_id).one()
@@ -373,7 +374,7 @@ def showCompanySmartphoneJSON(company_id):
     return jsonify(Smartphones=[i.serialize for i in smartphones])
 
 
-#Return JSON string which contains one specific smartphone item
+# Return JSON string which contains one specific smartphone item
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/JSON')
 def showSmartphoneJSON(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
