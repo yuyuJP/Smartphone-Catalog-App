@@ -210,6 +210,7 @@ def showCompany(company_id):
                            login_session=login_session)
 
 
+# Add smartphone item from a company page
 @app.route('/companies/<int:company_id>/smartphones/new',
            methods=['GET', 'POST'])
 def newSmartphoneFromCompany(company_id):
@@ -234,6 +235,7 @@ def newSmartphoneFromCompany(company_id):
             session.commit()
             return redirect(url_for('showCompany', company_id=company_id))
         else:
+            # If there is no enough parameters, return error.
             return "ERORR: Not enough parameter", 400
     else:
         return render_template('newItemFromCompany.html',
@@ -258,6 +260,7 @@ def showSmartphone(company_id, smartphone_id):
 # Create new smartphone item
 @app.route('/new/', methods=['GET', 'POST'])
 def newSmartphone():
+    # Check if the user is already logged in.
     if 'username' not in login_session:
         return redirect('/login')
     companies = session.query(Company).all()
@@ -280,6 +283,7 @@ def newSmartphone():
             # Redirect to top page.
             return redirect(url_for('showCompanies'))
         else:
+            # If there is no enough parameters, return error.
             return "ERORR: Not enough parameter", 400
     else:
         return render_template('newItem.html',
@@ -287,6 +291,7 @@ def newSmartphone():
                                login_session=login_session)
 
 
+# Edit item page
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/edit',
            methods=['GET', 'POST'])
 def editSmartphone(company_id, smartphone_id):
@@ -320,8 +325,10 @@ def editSmartphone(company_id, smartphone_id):
                                login_session=login_session)
 
 
+# Delete item page
 @app.route('/companies/<int:company_id>/smartphones/<int:smartphone_id>/delete', methods=['GET', 'POST'])  # NOQA
 def deleteSmartphone(company_id, smartphone_id):
+    # Check if the user is already logged in.
     if 'username' not in login_session:
         return redirect('/login')
     company = session.query(Company).filter_by(id=company_id).one()
