@@ -14,7 +14,7 @@
     </div>
     <p class="smartphone__description">{{ smartphone.description }}</p>
     <div class="button__container">
-      {% if 'username' in login_session %}
+      {% if 'username' in login_session  and isAuthorized %}
         <a class="button__item" href="{{url_for('editSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">Edit</a>
         <a class="button__item" href="{{url_for('deleteSmartphone', company_id = company.id, smartphone_id = smartphone.id)}}">Delete</a>
       {% endif %}

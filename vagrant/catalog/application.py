@@ -214,6 +214,7 @@ def showCompany(company_id):
 @app.route('/companies/<int:company_id>/smartphones/new',
            methods=['GET', 'POST'])
 def newSmartphoneFromCompany(company_id):
+    # Check if the user is already logged in.
     if 'username' not in login_session:
         return redirect('/login')
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
@@ -251,10 +252,14 @@ def showSmartphone(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
     #Fetch one smartphone filtered by smartphone ID
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    # Check an item's owner
+    isAuthorized = smartphone.user_id == login_session['user_id']
+    print(isAuthorized)
     return render_template('smartphone.html',
                            company=company,
                            smartphone=smartphone,
-                           login_session=login_session)
+                           login_session=login_session,
+                           isAuthorized=isAuthorized)
 
 
 # Create new smartphone item
@@ -301,6 +306,10 @@ def editSmartphone(company_id, smartphone_id):
     selectedCompany = session.query(Company).filter_by(id=company_id).one()
     companies = session.query(Company).all()
     edSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+    # Check an item's owner
+    isAuthorized = edSmartphone.user_id != login_session['user_id']
+    if isAuthorized:
+        return 'ERROR: You are NOT authorized to edit this item.', 403
     if request.method == 'POST':
         if request.form['name']:
             edSmartphone.name = request.form['name']
@@ -322,7 +331,7 @@ def editSmartphone(company_id, smartphone_id):
                                selectedCompany=selectedCompany,
                                editItem=edSmartphone,
                                companies=companies,
-                               login_session=login_session)
+                               login_session=login_session,)
 
 
 # Delete item page
@@ -333,6 +342,10 @@ def deleteSmartphone(company_id, smartphone_id):
         return redirect('/login')
     company = session.query(Company).filter_by(id=company_id).one()
     delSmartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
+
+    # Check an item's owner
+    if delSmartphone.user_id != login_session['user_id']:
+        return 'ERROR: You are NOT authorized to delete this item.', 403
     if request.method == 'POST':
         session.delete(delSmartphone)
         session.commit()
@@ -365,7 +378,7 @@ def showCompanySmartphoneJSON(company_id):
 def showSmartphoneJSON(company_id, smartphone_id):
     company = session.query(Company).filter_by(id=company_id).one()
     smartphone = session.query(Smartphone).filter_by(id=smartphone_id).one()
-    return jsonify(Smartphone=smartphone)
+    return jsonify(Smartphone=smartphone.serialize)
 
 
 if __name__ == '__main__':
