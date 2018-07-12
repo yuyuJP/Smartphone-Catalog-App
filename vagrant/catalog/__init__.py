@@ -190,6 +190,8 @@ def disconnect():
 # Show all companies
 @app.route('/')
 def showCompanies():
+    if 'user_id' not in login_session:
+        login_session['user_id'] = -1
     companies = session.query(Company).all()
     smartphone_query = session.query(Smartphone)
     smartphone_desc = smartphone_query.order_by(Smartphone.id.desc())
