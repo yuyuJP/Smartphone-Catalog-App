@@ -19,8 +19,8 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Smartphone Catalog App"
 
 # Connect to Database and create database session
-sqlite_path = 'sqlite:///companysmartphone.db?check_same_thread=False'
-engine = create_engine(sqlite_path)
+database_path = 'postgresql://catalog:catalogpassword@localhost/catalog?check_same_thread=False'
+engine = create_engine(database_path)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

@@ -56,7 +56,7 @@ class Smartphone(Base):
         }
 
 
-engine = create_engine('sqlite:///companysmartphone.db')
+engine = create_engine('postgresql://catalog:catalogpassword@localhost/catalog')
 
 
 Base.metadata.create_all(engine)
